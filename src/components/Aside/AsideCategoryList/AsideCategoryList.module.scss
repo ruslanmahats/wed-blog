@@ -1,0 +1,31 @@
+.container {
+	display: grid;
+	gap: 20px;
+	grid-template-columns: 1fr 1fr 1fr;
+}
+.category {
+	width: 100%;
+	padding: 10px 25px;
+	border-radius: 10px;
+	text-align: center;
+	font-size: 14px;
+}
+.cat_1 {
+	background-color: #57c4ff31;
+}
+
+.cat_2 {
+	background-color: #da85c731;
+}
+.cat_3 {
+	background-color: #7fb88133;
+}
+.cat_4 {
+	background-color: #ff795736;
+}
+.cat_5 {
+	background-color: #ffb04f45;
+}
+.cat_6 {
+	background-color: #5e4fff31;
+}

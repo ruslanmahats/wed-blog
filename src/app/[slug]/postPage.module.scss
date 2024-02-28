@@ -1,0 +1,101 @@
+.container {
+}
+
+.info {
+	display: flex;
+	align-items: center;
+	gap: 50px;
+
+	&TextContainer {
+		flex: 1;
+	}
+
+	&Title {
+		margin-bottom: 50px;
+		font-size: 64px;
+	}
+
+	&ImageContainer {
+		flex: 1;
+		height: 350px;
+		position: relative;
+	}
+
+	&Image {
+		object-fit: cover;
+	}
+}
+
+.date {
+}
+
+.user {
+	display: flex;
+	gap: 20px;
+
+	&ImageContainer {
+		width: 50px;
+		height: 50px;
+		position: relative;
+	}
+
+	&Image {
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	&TextContainer {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		color: var(--softTextColor);
+	}
+	&Name {
+		font-size: 20px;
+		font-weight: 500;
+	}
+}
+
+.content {
+	display: flex;
+	gap: 50px;
+}
+
+.post {
+	flex: 5;
+	margin-top: 60px;
+}
+
+.description p {
+	margin-bottom: 20px;
+	font-size: 20px;
+	font-weight: 300;
+}
+
+@media screen and (max-width: 1536px) {
+	.infoTitle {
+		font-size: 54px;
+	}
+}
+
+@media screen and (max-width: 1280px) {
+	.infoTitle {
+		font-size: 48px;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.infoImageContainer {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.infoTitle {
+		font-size: 36px;
+	}
+
+	.description p {
+		font-size: 18px;
+	}
+}
