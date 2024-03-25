@@ -26,7 +26,8 @@
 	}
 }
 
-.date {
+.data {
+	flex: 5 1;
 }
 
 .user {
@@ -59,6 +60,7 @@
 .content {
 	display: flex;
 	gap: 50px;
+	margin-top: 30px;
 }
 
 .post {
@@ -66,8 +68,12 @@
 	margin-top: 60px;
 }
 
+.postViews {
+	margin-top: 10px;
+}
+
 .description p {
-	margin-bottom: 20px;
+	margin: 20px 0;
 	font-size: 20px;
 	font-weight: 300;
 }

@@ -1,16 +1,53 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Comments.module.scss';
+import useSWR from 'swr';
+import { useSession } from 'next-auth/react';
+import { useState } from 'react';
 
-const Comments = () => {
-	const status = 'authenticated';
+const Comments = ({ postSlug }) => {
+	const [desc, setDesc] = useState('');
+	const { status } = useSession();
+
+	const fetcher = async (url) => {
+		const res = await fetch(url);
+
+		if (!res.ok) {
+			throw new Error(data.message);
+		}
+
+		const data = await res.json();
+
+		setDesc('');
+		return data;
+	};
+
+	const { data, mutate, isLoading } = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`, fetcher);
+
+	const handleSubmit = async () => {
+		await fetch('/api/comments', {
+			method: 'POST',
+			body: JSON.stringify({ desc, postSlug }),
+		});
+		mutate();
+	};
+
 	return (
 		<div className={styles.container}>
 			<h1 className={styles.title}>Comments</h1>
 			{status === 'authenticated' ? (
 				<div className={styles.write}>
-					<textarea placeholder='write a comment' className={styles.input} />
-					<button className={styles.button}>Send</button>
+					<textarea
+						placeholder='write a comment'
+						className={styles.input}
+						onChange={(e) => setDesc(e.target.value)}
+						value={desc}
+					/>
+					<button className={styles.button} onClick={handleSubmit}>
+						Send
+					</button>
 				</div>
 			) : (
 				<Link href='/login' className={styles.link}>
@@ -18,50 +55,26 @@ const Comments = () => {
 				</Link>
 			)}
 			<div className={styles.comments}>
-				<div className={styles.comment}>
-					<div className={styles.user}>
-						<Image src='/p1.jpeg' alt='John Doe' width={50} height={50} className={styles.image} />
-						<div className={styles.userInfo}>
-							<span className={styles.userName}>John Doe</span>
-							<span className={styles.date}>01.02.2015</span>
-						</div>
-					</div>
-					<div className={styles.desc}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, mollitia. Lorem ipsum, dolor sit amet
-						consectetur adipisicing elit. Eum, sed in! Est inventore et nihil sunt laudantium pariatur vel
-						officia?
-					</div>
-				</div>
-
-				<div className={styles.comment}>
-					<div className={styles.user}>
-						<Image src='/p1.jpeg' alt='John Doe' width={50} height={50} className={styles.image} />
-						<div className={styles.userInfo}>
-							<span className={styles.userName}>John Doe</span>
-							<span className={styles.date}>01.02.2015</span>
-						</div>
-					</div>
-					<div className={styles.desc}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, mollitia. Lorem ipsum, dolor sit amet
-						consectetur adipisicing elit. Eum, sed in! Est inventore et nihil sunt laudantium pariatur vel
-						officia?
-					</div>
-				</div>
-
-				<div className={styles.comment}>
-					<div className={styles.user}>
-						<Image src='/p1.jpeg' alt='John Doe' width={50} height={50} className={styles.image} />
-						<div className={styles.userInfo}>
-							<span className={styles.userName}>John Doe</span>
-							<span className={styles.date}>01.02.2015</span>
-						</div>
-					</div>
-					<div className={styles.desc}>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure, mollitia. Lorem ipsum, dolor sit amet
-						consectetur adipisicing elit. Eum, sed in! Est inventore et nihil sunt laudantium pariatur vel
-						officia?
-					</div>
-				</div>
+				{isLoading
+					? 'Loading comments...'
+					: data.map((item) => (
+							<div className={styles.comment} key={item.id}>
+								<div className={styles.user}>
+									<Image
+										src={item.user.image || '/p1.jpeg'}
+										alt={item.user.name}
+										width={50}
+										height={50}
+										className={styles.image}
+									/>
+									<div className={styles.userInfo}>
+										<span className={styles.userName}>{item.user.name}</span>
+										<span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
+									</div>
+								</div>
+								<div className={styles.desc}>{item.desc}</div>
+							</div>
+					  ))}
 			</div>
 		</div>
 	);

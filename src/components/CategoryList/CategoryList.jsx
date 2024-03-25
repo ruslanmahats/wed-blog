@@ -1,23 +1,36 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { categories } from './categoryListObj';
 import styles from './CategoryList.module.scss';
 
-const categoryListArr = categories.map((item) => {
-	const lowerCaseName = item.name.toLowerCase();
+const getData = async () => {
+	const res = await fetch('http://localhost:3000/api/categories', { cache: 'no-store' });
 
-	return (
-		<Link
-			key={item.id}
-			href={`/blog?cat=${lowerCaseName}`}
-			className={`${styles.category} ${styles['cat_' + item.id]}`}>
-			<Image src={`/${lowerCaseName}.png`} alt={item.name} width={32} height={32} className={styles.image} />
-			{item.name}
-		</Link>
-	);
-});
+	if (!res.ok) {
+		throw new Error('Failed');
+	}
 
-const CategoryList = () => {
+	const data = await res.json();
+
+	return data;
+};
+
+const CategoryList = async () => {
+	const categories = await getData();
+
+	const categoryListArr = categories?.map((item) => {
+		const lowerCaseName = item.title.toLowerCase();
+
+		return (
+			<Link
+				key={item.id}
+				href={`/blog?cat=${lowerCaseName}`}
+				className={`${styles.category} ${styles['cat_' + item.title]}`}>
+				{item.img && <Image src={item.img} alt={item.title} width={32} height={32} className={styles.image} />}
+				{item.title}
+			</Link>
+		);
+	});
+
 	return (
 		<div className={styles.container}>
 			<h1 className={styles.title}>Popular Categories</h1>

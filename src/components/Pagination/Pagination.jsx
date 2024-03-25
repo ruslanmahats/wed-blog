@@ -1,10 +1,25 @@
-import styles from './Pagination.module.scss';
+'use client';
 
-const Pagination = () => {
+import styles from './Pagination.module.scss';
+import { useRouter } from 'next/navigation';
+
+const Pagination = ({ page, hasPrev, hasNext, cat }) => {
+	const router = useRouter();
+
 	return (
 		<div className={styles.container}>
-			<button className={styles.button}>Previous</button>
-			<button className={styles.button}>Next</button>
+			<button
+				className={styles.button}
+				disabled={!hasPrev}
+				onClick={() => router.push(`?${cat ? 'cat=' + cat + '&' : ''}page=${page - 1}`)}>
+				Previous
+			</button>
+			<button
+				className={styles.button}
+				disabled={!hasNext}
+				onClick={() => router.push(`?${cat ? 'cat=' + cat + '&' : ''}page=${page + 1}`)}>
+				Next
+			</button>
 		</div>
 	);
 };

@@ -1,5 +1,4 @@
 import AuthLinks from '../AuthLinks/AuthLinks';
-import Image from 'next/image';
 import Link from 'next/link';
 import SocialLinks from '../SocialLinks/SocialLinks';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
@@ -11,7 +10,9 @@ const NavBar = () => {
 			<div className={styles.social}>
 				<SocialLinks iconSize={24} />
 			</div>
-			<div className={styles.logo}>WedBlog</div>
+			<div className={styles.logo}>
+				<Link href='/'>WedBlog</Link>
+			</div>
 			<div className={styles.links}>
 				<ThemeToggle />
 				<Link href='/' className={styles.link}>

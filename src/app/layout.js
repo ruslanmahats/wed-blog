@@ -1,5 +1,6 @@
 import './globals.scss';
 
+import AuthProvider from '@/providers/AuthProvider';
 import Footer from '@/components/Footer/Footer';
 import { Inter } from 'next/font/google';
 import NavBar from '@/components/NavBar/NavBar';
@@ -16,22 +17,25 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 	const cookieStore = cookies();
-	const theme = Boolean(cookieStore.get('theme')) ? cookieStore.get('theme').value : 'light';
+	const themeInCookies = cookieStore.get('theme');
+	const theme = themeInCookies ? themeInCookies.value : 'light';
 
 	return (
 		<html lang='en'>
 			<body className={inter.className}>
-				<ThemeContextProvider themeCookie={theme}>
-					<ThemeProvider>
-						<div className='container'>
-							<div className='wrapper'>
-								<NavBar />
-								{children}
-								<Footer />
+				<AuthProvider>
+					<ThemeContextProvider themeCookie={theme}>
+						<ThemeProvider>
+							<div className='container'>
+								<div className='wrapper'>
+									<NavBar />
+									{children}
+									<Footer />
+								</div>
 							</div>
-						</div>
-					</ThemeProvider>
-				</ThemeContextProvider>
+						</ThemeProvider>
+					</ThemeContextProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);
