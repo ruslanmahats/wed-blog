@@ -34,6 +34,25 @@ const Comments = ({ postSlug }) => {
 		mutate();
 	};
 
+	const comments = data.map((item) => (
+		<div className={styles.comment} key={item.id}>
+			<div className={styles.user}>
+				<Image
+					src={item.user.image || '/p1.jpeg'}
+					alt={item.user.name}
+					width={50}
+					height={50}
+					className={styles.image}
+				/>
+				<div className={styles.userInfo}>
+					<span className={styles.userName}>{item.user.name}</span>
+					<span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
+				</div>
+			</div>
+			<div className={styles.desc}>{item.desc}</div>
+		</div>
+	));
+
 	return (
 		<div className={styles.container}>
 			<h1 className={styles.title}>Comments</h1>
@@ -54,28 +73,7 @@ const Comments = ({ postSlug }) => {
 					Login to write a comment
 				</Link>
 			)}
-			<div className={styles.comments}>
-				{isLoading
-					? 'Loading comments...'
-					: data.map((item) => (
-							<div className={styles.comment} key={item.id}>
-								<div className={styles.user}>
-									<Image
-										src={item.user.image || '/p1.jpeg'}
-										alt={item.user.name}
-										width={50}
-										height={50}
-										className={styles.image}
-									/>
-									<div className={styles.userInfo}>
-										<span className={styles.userName}>{item.user.name}</span>
-										<span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
-									</div>
-								</div>
-								<div className={styles.desc}>{item.desc}</div>
-							</div>
-					  ))}
-			</div>
+			<div className={styles.comments}>{isLoading ? 'Loading comments...' : comments}</div>
 		</div>
 	);
 };
