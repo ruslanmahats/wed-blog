@@ -17,6 +17,8 @@ const LoginPage = () => {
 		router.push('/');
 	}
 
+	console.log(status);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.wrapper}>

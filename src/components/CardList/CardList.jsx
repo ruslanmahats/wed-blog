@@ -4,7 +4,7 @@ import Pagination from '../Pagination/Pagination';
 import styles from './CardList.module.scss';
 
 const getData = async (page, cat) => {
-	const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${cat || ''}`, { cache: 'no-store' });
+	const res = await fetch(`${process.env.API_HOST}/api/posts?page=${page}&cat=${cat || ''}`, { cache: 'no-store' });
 
 	if (!res.ok) {
 		throw new Error('Failed');

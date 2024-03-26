@@ -24,34 +24,36 @@ const Comments = ({ postSlug }) => {
 		return data;
 	};
 
-	const { data, mutate, isLoading } = useSWR(`http://localhost:3000/api/comments?postSlug=${postSlug}`, fetcher);
+	const { data, mutate, isLoading } = useSWR(`${process.env.API_HOST}/api/comments?postSlug=${postSlug}`, fetcher);
 
 	const handleSubmit = async () => {
-		await fetch('/api/comments', {
+		await fetch(`${process.env.API_HOST}/api/comments`, {
 			method: 'POST',
 			body: JSON.stringify({ desc, postSlug }),
 		});
 		mutate();
 	};
 
-	const comments = data.map((item) => (
-		<div className={styles.comment} key={item.id}>
-			<div className={styles.user}>
-				<Image
-					src={item.user.image || '/p1.jpeg'}
-					alt={item.user.name}
-					width={50}
-					height={50}
-					className={styles.image}
-				/>
-				<div className={styles.userInfo}>
-					<span className={styles.userName}>{item.user.name}</span>
-					<span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
+	const comments =
+		data &&
+		data.map((item) => (
+			<div className={styles.comment} key={item.id}>
+				<div className={styles.user}>
+					<Image
+						src={item.user.image || '/p1.jpeg'}
+						alt={item.user.name}
+						width={50}
+						height={50}
+						className={styles.image}
+					/>
+					<div className={styles.userInfo}>
+						<span className={styles.userName}>{item.user.name}</span>
+						<span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
+					</div>
 				</div>
+				<div className={styles.desc}>{item.desc}</div>
 			</div>
-			<div className={styles.desc}>{item.desc}</div>
-		</div>
-	));
+		));
 
 	return (
 		<div className={styles.container}>
