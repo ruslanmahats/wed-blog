@@ -1,21 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { getCategories } from './getCategories';
 import styles from './CategoryList.module.scss';
 
-const getData = async () => {
-	const res = await fetch(`${process.env.API_HOST}/api/categories`, { cache: 'no-store' });
-
-	if (!res.ok) {
-		throw new Error('Failed');
-	}
-
-	const data = await res.json();
-
-	return data;
-};
-
 const CategoryList = async () => {
-	const categories = await getData();
+	const categories = await getCategories();
 
 	const categoryListArr = categories?.map((item) => {
 		const lowerCaseName = item.title.toLowerCase();

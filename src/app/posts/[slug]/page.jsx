@@ -4,7 +4,7 @@ import Image from 'next/image';
 import styles from './postPage.module.scss';
 
 const getData = async (slug) => {
-	const res = await fetch(`${process.env.API_HOST}/api/posts/${slug}`, { cache: 'no-store' });
+	const res = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/posts/${slug}`, { cache: 'no-store' });
 
 	if (!res.ok) {
 		throw new Error('Failed');

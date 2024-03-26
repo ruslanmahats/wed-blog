@@ -24,10 +24,13 @@ const Comments = ({ postSlug }) => {
 		return data;
 	};
 
-	const { data, mutate, isLoading } = useSWR(`${process.env.API_HOST}/api/comments?postSlug=${postSlug}`, fetcher);
+	const { data, mutate, isLoading } = useSWR(
+		`${process.env.NEXT_PUBLIC_API_HOST}/api/comments?postSlug=${postSlug}`,
+		fetcher
+	);
 
 	const handleSubmit = async () => {
-		await fetch(`${process.env.API_HOST}/api/comments`, {
+		await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/comments`, {
 			method: 'POST',
 			body: JSON.stringify({ desc, postSlug }),
 		});

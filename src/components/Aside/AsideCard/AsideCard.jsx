@@ -5,7 +5,6 @@ import styles from './AsideCard.module.scss';
 const AsideCard = ({
 	title = 'Lorem ipsum dolor sit amet',
 	catName = 'catPlaceholder',
-	catId,
 	userName = 'userPlaceholder',
 	date = '00.00.0000',
 	linkUrl = '#',
@@ -26,7 +25,7 @@ const AsideCard = ({
 				</div>
 			) : null}
 			<div className={styles.textContainer}>
-				<span className={`${styles.category} ${styles['cat_' + catId]}`}>{catName}</span>
+				<span className={`${styles.category} ${styles['cat_' + catName.toLowerCase()]}`}>{catName}</span>
 				<h3 className={styles.title}>{title}</h3>
 				<div className={styles.detail}>
 					{userName && <span className={styles.userName}>{userName}</span>}
