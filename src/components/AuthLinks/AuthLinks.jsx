@@ -1,44 +1,49 @@
-'use client';
+'use client'
 
-import { signOut, useSession } from 'next-auth/react';
-import { useRef, useState } from 'react';
+import { signOut, useSession } from 'next-auth/react'
+import { useRef, useState } from 'react'
 
-import Link from 'next/link';
-import styles from './AuthLinks.module.scss';
+import Link from 'next/link'
+import styles from './AuthLinks.module.scss'
 
 const AuthLinks = () => {
-	const [open, setOpen] = useState(false);
-	const { status } = useSession();
-	const logOutRef = useRef();
+	const [open, setOpen] = useState(false)
+	const { status } = useSession()
+	const logOutRef = useRef()
 
 	const onClickHandler = (e) => {
-		setOpen(!open);
-		if (e.target === logOutRef.current) {
-			signOut();
-		}
-	};
+		setOpen(!open)
+	}
+
+	const logOutHandler = () => {
+		signOut()
+	}
 
 	return (
 		<>
-			{status === 'unauthenticated' ? (
-				<Link onClick={onClickHandler} href='/login' className={styles.link}>
-					Login
-				</Link>
-			) : (
-				<>
-					<Link onClick={onClickHandler} href='/write' className={styles.link}>
-						Write
+			{status !== 'loading' ? (
+				status !== 'authenticated' ? (
+					<Link href='/login' className={styles.link}>
+						Login
 					</Link>
-					<span onClick={onClickHandler} className={styles.link}>
-						LogOut
-					</span>
-				</>
-			)}
+				) : (
+					<>
+						<Link href='/write' className={styles.link}>
+							Write
+						</Link>
+						<span ref={logOutRef} onClick={logOutHandler} className={styles.link}>
+							LogOut
+						</span>
+					</>
+				)
+			) : null}
+
 			<div className={styles.burger} onClick={(e) => onClickHandler(e)}>
 				<div className={styles.line}></div>
 				<div className={styles.line}></div>
 				<div className={styles.line}></div>
 			</div>
+
 			{open && (
 				<div className={styles.responsiveMenu}>
 					<Link onClick={onClickHandler} href='/'>
@@ -59,7 +64,13 @@ const AuthLinks = () => {
 							<Link onClick={onClickHandler} href='/write' className={styles.link}>
 								Write
 							</Link>
-							<span ref={logOutRef} onClick={onClickHandler} className={styles.link}>
+							<span
+								ref={logOutRef}
+								onClick={() => {
+									onClickHandler()
+									logOutHandler()
+								}}
+								className={styles.link}>
 								LogOut
 							</span>
 						</>
@@ -67,7 +78,7 @@ const AuthLinks = () => {
 				</div>
 			)}
 		</>
-	);
-};
+	)
+}
 
-export default AuthLinks;
+export default AuthLinks

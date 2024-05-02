@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import styles from './Card.module.scss';
+import Image from 'next/image'
+import Link from 'next/link'
+import styles from './Card.module.scss'
 
 const Card = ({ item }) => {
 	return (
@@ -16,13 +16,13 @@ const Card = ({ item }) => {
 				<Link href={`/posts/${item.slug}`}>
 					<h3 className={styles.title}>{item.title}</h3>
 				</Link>
-				<p className={styles.desc}>{item.desc.substring(0, 250)}</p>
+				<p className={styles.desc}>{item.desc.replace(/(<([^>]+)>)/gi, '').substring(0, 250)}</p>
 				<Link href={`/posts/${item.slug}`} className={styles.link}>
 					Read More
 				</Link>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default Card;
+export default Card

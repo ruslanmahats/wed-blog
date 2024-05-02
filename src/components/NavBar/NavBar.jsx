@@ -1,8 +1,8 @@
-import AuthLinks from '../AuthLinks/AuthLinks';
-import Link from 'next/link';
-import SocialLinks from '../SocialLinks/SocialLinks';
-import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import styles from './NavBar.module.scss';
+import AuthLinks from '../AuthLinks/AuthLinks'
+import Link from 'next/link'
+import SocialLinks from '../SocialLinks/SocialLinks'
+import ThemeToggle from '../ThemeToggle/ThemeToggle'
+import styles from './NavBar.module.scss'
 
 const NavBar = () => {
 	return (
@@ -27,7 +27,7 @@ const NavBar = () => {
 				<AuthLinks />
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default NavBar;
+export default NavBar
