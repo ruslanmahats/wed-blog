@@ -11,7 +11,7 @@ const AuthLinks = () => {
 	const { status } = useSession()
 	const logOutRef = useRef()
 
-	const onClickHandler = (e) => {
+	const onClickHandler = () => {
 		setOpen(!open)
 	}
 
@@ -38,7 +38,7 @@ const AuthLinks = () => {
 				)
 			) : null}
 
-			<div className={styles.burger} onClick={(e) => onClickHandler(e)}>
+			<div className={styles.burger} onClick={() => onClickHandler()}>
 				<div className={styles.line}></div>
 				<div className={styles.line}></div>
 				<div className={styles.line}></div>
